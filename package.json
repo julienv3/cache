@@ -1,0 +1,30 @@
+{
+	"name": "cache",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"dependencies": {
+		"isomorphic-fetch": "^3.0.0",
+		"react-router-dom": "^6.28.0",
+		"react-ssr-prepass": "^1.6.0",
+		"react-streaming": "^0.3.43",
+		"vike": "0.4.171",
+		"vite-plugin-cjs-interop": "^2.1.5",
+		"react": "18.3.1",
+		"react-dom": "18.3.1"
+	},
+	"devDependencies": {
+		"@types/react": "^18.3.12",
+		"@types/react-dom": "^18.3.1",
+		"@vitejs/plugin-react-swc": "^3.7.1",
+		"@vite-plugin-vercel/vike": "^8.0.1",
+		"typescript": "^5.6.3",
+		"vite": "5.4.11",
+		"vite-plugin-vercel": "^8.0.1"
+	},
+	"scripts": {
+		"dev": "PORT=3001 vite dev",
+		"build": "vite build",
+		"start": "vite preview"
+	}
+}
