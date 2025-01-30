@@ -16,13 +16,18 @@ function getServerOptions(
   };
 }
 
-async function getGraphqlEndpoint({ cache }: { cache: boolean }) {
-  const endpoint = await getSsrEndpoint(
-    {},
-    path.join(__dirname, "graphql_.template.ts")
-  );
+async function getGraphqlEndpoint({
+  name,
+  cache,
+  file = "graphql_.template.ts",
+}: {
+  name: string;
+  cache: boolean;
+  file?: string;
+}) {
+  const endpoint = await getSsrEndpoint({}, path.join(__dirname, file));
   endpoint.addRoute = true;
-  endpoint.destination = cache ? "cache" : "query";
+  endpoint.destination = name;
   endpoint.isr = cache ? { expiration: 10 } : undefined;
   return endpoint;
 }
@@ -44,8 +49,28 @@ export default defineConfig(async (config: ConfigEnv) => {
     vercel: {
       additionalEndpoints: [
         await getSsrEndpoint({}, path.join(__dirname, "ssr_.template.ts")),
-        await getGraphqlEndpoint({ cache: false }),
-        await getGraphqlEndpoint({ cache: true }),
+        await getGraphqlEndpoint({ name: "query", cache: false }),
+        await getGraphqlEndpoint({ name: "cache", cache: true }),
+        await getGraphqlEndpoint({
+          name: "large",
+          cache: true,
+          file: "large.ts",
+        }),
+        await getGraphqlEndpoint({
+          name: "largeplusone",
+          cache: true,
+          file: "large.ts",
+        }),
+        await getGraphqlEndpoint({
+          name: "largenocache",
+          cache: false,
+          file: "large.ts",
+        }),
+        await getGraphqlEndpoint({
+          name: "largenocacheplusone",
+          cache: false,
+          file: "large.ts",
+        }),
       ],
     },
   };
