@@ -17,7 +17,6 @@ const onBeforeRender: OnBeforeRenderAsync = async (
   return {
     pageContext: {
       pageHtml,
-      userAgent,
     },
   };
 };

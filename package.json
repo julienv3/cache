@@ -8,7 +8,7 @@
 		"react-router-dom": "^6.28.0",
 		"react-ssr-prepass": "^1.6.0",
 		"react-streaming": "^0.3.43",
-		"vike": "0.4.171",
+		"vike": "0.4.226",
 		"vite-plugin-cjs-interop": "^2.1.5",
 		"react": "18.3.1",
 		"react-dom": "18.3.1"
@@ -19,12 +19,13 @@
 		"@vitejs/plugin-react-swc": "^3.7.1",
 		"@vite-plugin-vercel/vike": "^8.0.1",
 		"typescript": "^5.6.3",
-		"vite": "5.4.11",
+		"vite": "^6.2.3",
 		"vite-plugin-vercel": "^8.0.1"
 	},
 	"scripts": {
 		"dev": "PORT=3001 vite dev",
 		"build": "vite build",
 		"start": "vite preview"
-	}
+	},
+	"packageManager": "pnpm@8.15.0+sha512.ea45517d5285d123eac02c3793505fa1fd6da90a2fc60d1e8d9e0c1e9292886ecfaff513f062b9d1cc8021bb8615033b1ac5bea3b2ee3fc165a6d7034bbe6b03"
 }
