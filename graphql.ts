@@ -9,20 +9,20 @@ export default async function handler(
 ) {
   console.info(`Serverless function ${request.url} was invoked`);
 
-  const crash = request.url.includes("crash");
+  const crash = request.url.includes("crash") || !!request.headers["x-crash"];
   response.setHeader("x-serverless-function", request.url as string);
   response.setHeader("content-type", "application/json");
 
   if (crash) {
-    response.statusCode = 500;
+    response.statusCode = +request.headers["x-crash"] || 500;
     response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
     return response.json({
-      message: "I crashed :(",
+      message: `I crashed :( (${new Date().toTimeString()})`,
     });
   } else {
     response.statusCode = 200;
     return response.json({
-      message: `Hello World from ${request.url}`,
+      message: `Hello World from ${request.url} (${new Date().toTimeString()})`,
     });
   }
 }

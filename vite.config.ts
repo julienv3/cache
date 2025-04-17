@@ -36,7 +36,7 @@ async function getServerlessEndpoint({
     },
     destination: destination,
     addRoute: true,
-    isr: cache ? { expiration: 10 * 60 } : undefined,
+    isr: cache ? { expiration: 15 } : undefined,
   };
 }
 

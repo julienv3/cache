@@ -57,13 +57,28 @@ export const Page = () => {
           Age: r.headers.get("Age"),
           status: r.status,
           "X-Vercel-Cache": r.headers.get("x-vercel-cache"),
-          // From experiementation, it looks like:
-          // - MISS: 500 gets cached, next request will HIT
-          // - STALE: 500 does not overwrite cache (Age does not reset)
+          // From experimentation, it looks like:
+          // CACHE EMPTY (MISS response):
+          //   200/4XX/5XX: gets cached, will return HIT next, set age to 0, {expiration} seconds until STALE
+          // CACHE STALE (STALE response):
+          //   200: overwrite cache, will return HIT next, set age to 0, {expiration} seconds until STALE
+          //   4XX/5XX: doesn't overwrite cache, will (despite that) return HIT next, doesn't reset age, hardcoded (regardless of {expiration}) 30 seconds until STALE
         })
       )
     );
   }, []);
+
+  const fetchCache = (status?: number) =>
+    fetch(new URL("/cache", location.origin).toString(), {
+      method: "POST",
+      ...(status
+        ? {
+            headers: {
+              "x-crash": status.toString(),
+            },
+          }
+        : {}),
+    });
 
   return (
     <>
@@ -74,6 +89,9 @@ export const Page = () => {
       <pre>{JSON.stringify(cache, null, 2)}</pre>
       <h2>Crash:</h2>
       <pre>{JSON.stringify(crash, null, 2)}</pre>
+      <button onClick={() => fetchCache()}>fetch /cache 200</button>
+      <button onClick={() => fetchCache(424)}>fetch /cache 424</button>
+      <button onClick={() => fetchCache(500)}>fetch /cache 500</button>
     </>
   );
 };
