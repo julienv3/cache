@@ -47,8 +47,15 @@ export default defineConfig(async (config: ConfigEnv) => {
     envDir,
     envPrefix: ["VITE_", "VERCEL_ANALYTICS_ID"],
     vercel: {
+      prerender: false,
       additionalEndpoints: [
-        await getSsrEndpoint({}, path.join(__dirname, "ssr_.template.ts")),
+        {
+          ...(await getSsrEndpoint(
+            {},
+            path.join(__dirname, "ssr_.template.ts")
+          )),
+          isr: { expiration: 60 * 60 * 2 },
+        },
         await getGraphqlEndpoint({ name: "query", cache: false }),
         await getGraphqlEndpoint({ name: "cache", cache: true }),
         await getGraphqlEndpoint({

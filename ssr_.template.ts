@@ -28,5 +28,10 @@ export default async function handler(
   response.statusCode = statusCode;
   response.setHeader("content-type", contentType);
   response.setHeader("x-serverless-function", request.url + "");
+
+  if (statusCode >= 400) {
+    console.warn("Responding with ", { statusCode, body: httpResponse.body });
+  }
+
   return httpResponse.pipe(response);
 }
