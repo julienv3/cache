@@ -54,7 +54,7 @@ export default defineConfig(async (config: ConfigEnv) => {
             {},
             path.join(__dirname, "ssr_.template.ts")
           )),
-          isr: { expiration: 60 * 60 * 2 },
+          // isr: { expiration: 60 * 60 * 2 },
         },
         await getGraphqlEndpoint({ name: "query", cache: false }),
         await getGraphqlEndpoint({ name: "cache", cache: true }),
